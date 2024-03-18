@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 2 - Oliver Kotla - BPhO Computational Challenge</title>
+
+    <script src="scripts/libs/plotly/plotly-2.30.0.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="styles/style.css">
+
+    <link rel="stylesheet" href="scripts/libs/katex/katex.min.css" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="scripts/libs/katex/katex.min.js" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="scripts/libs/katex/contrib/auto-render.min.js" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+</head>
+<body>
+    <div class="content">
+        <h1>Task 2</h1>
+        <div id="graph"></div>
+        <div class="input-container">
+            <span class="redrawcontainer">
+                <label class="switch">
+                    <span>
+                        <input type="checkbox" id="autoredraw">
+                        <span class="slider"></span>
+                    </span>
+                </label>
+                <label for="autoredraw" style="transform: translateY(-2px);">
+                    <span><svg xmlns="http://www.w3.org/2000/svg" style="height: 16px; width: 16px; transform: translateY(2px);" viewBox="0 0 24 24"><title>chart-bell-curve</title><path d="M9.96,11.31C10.82,8.1 11.5,6 13,6C14.5,6 15.18,8.1 16.04,11.31C17,14.92 18.1,19 22,19V17C19.8,17 19,14.54 17.97,10.8C17.08,7.46 16.15,4 13,4C9.85,4 8.92,7.46 8.03,10.8C7.03,14.54 6.2,17 4,17V2H2V22H22V20H4V19C7.9,19 9,14.92 9.96,11.31Z" /></svg></span>
+                    <span>Auto Redraw</span>
+                </label>
+            </span>
+            <br>
+            <label for="u">Launch Speed</label>
+            <span class="input-wrap">
+                <input step="0.1" min="0" value="10" type="number" name="Launch Speed" id="u" onchange="plotfrominputs();"><span>\(m/s\)</span>
+            </span>
+            <label for="theta">Launch Angle</label>
+            <span class="input-wrap">
+                <input step="0.1" min="0" max="360" value="45" type="number" name="Launch Angle" id="theta" onchange="plotfrominputs();"><span>\(\circ\)</span>
+            </span>
+            <label for="h">Launch Height</label>
+            <span class="input-wrap">
+                <input step="0.1" min="0" value="10" type="number" name="Launch Height" id="h" onchange="plotfrominputs();"><span>\(m\)</span>
+            </span>
+            <label for="g">Gravitational Strength</label>
+            <span class="input-wrap">
+                <input step="0.1" min="0" value="9.8" type="number" name="Gravity" id="g" onchange="plotfrominputs();"><span>\(m/s^2\)</span>
+            </span>
+            <label class="button">
+                <button onclick="plotfrominputs();">Redraw</button>
+            </label>
+        </div>
+        <h2>Explanation</h2>
+        <ol>
+            <li>
+                <p>We can work out the function for horizontal position at a time \(t\) given starting speed \(u\) and angle \(\theta\) by multiplying the horizontal velocity (\(u \times cos(\theta) = u_{x}\)) by \(t\).</p>
+                <p>\(x(t) = u \times cos(\theta) \times t\)</p>
+                <p>\(\downarrow\)</p>
+                <p>\(x(t) = u_{x} \times t\)</p>
+            </li>
+            <li>
+                <p>By taking the equation for displacement, given initial velocity \(u\), time \(t\), and acceleration \(a\), we can substitute in the values to reach our function for vertical movement.</p>
+                <p>\(s = u \times t + {1 \over 2} a t^2\)</p>
+                <ol style="list-style: upper-roman !important;">
+                    <li>
+                        <p>We can substitute our starting vertical velocity \(u_{y}\) (i.e. \(u \times sin(\theta)\)) for the initial velocity in the equation \(u\).</p>
+                        <p>\(s = u \times sin( \theta ) \times t + {1 \over 2} a t^2\)</p>
+                        <p>\(\downarrow\)</p>
+                        <p>\(s = u_{y} \times t + {1 \over 2} a t^2\)</p>
+                    </li>
+                    <li>
+                        <p>We can substitute our strength of gravity \(g\) for the acceleration in the equation \(a\), making the term negative to account for the downward force of gravity.</p>
+                        <p>\(s = u_{y} \times t - {1 \over 2} g t^2\)</p>
+                    </li>
+                    <li>
+                        <p>Finally, we can add our starting height \(h\), leaving us with our function for the vertical position at a given time \(t\).</p>
+                        <p>\(s = u_{y} \times t - {1 \over 2} g t^2 + h\)</p>
+                        <p>\(\downarrow\)</p>
+                        <p>\(y(t) = u_{y} \times t - {1 \over 2} g t^2 + h\)</p>
+                    </li>
+
+                </ol>
+            </li>
+            <li>
+                <p>Given functions \(y(t)\) and \(x(t)\), we can write \(y\) in terms of \(x\), or in other words, \(y(x)\).</p>
+                <p>\(y(t) = u_{y} \times t - {1 \over 2} g t^2 + h\)</p>
+                <p>\(x(t) = u_{x} \times t\)</p>
+                <ol style="list-style: upper-roman !important;">
+                    <li>
+                        <p>Rearrange \(x(t)\) for \(t\).</p>
+                        <p>\(x = u_{x} \times t\)</p>
+                        <p>\(\downarrow\)</p>
+                        <p>\(t = {x \over u_{x}}\)</p>
+                    </li>
+                    <li>
+                        <p>Substitute \(t\) into the function \(y(t)\) and simplify.</p>
+                        <p>\(y(t) = u_{y} \times t - {1 \over 2} g t^2 + h\)</p>
+                        <p>\(\downarrow\)</p>
+                        <p>\(y(t) = u_{y} \times {x \over u_{x}} - {1 \over 2} g ({x \over u_{x}})^2 + h\)</p>
+                        <p>\(\downarrow\)</p>
+                        <p>\(y(t) = u \times sin(\theta) \times {x \over u \times cos(\theta)} - {1 \over 2} g ({x \over u_{x}})^2 + h\)</p>
+                        <p>\(\downarrow\)</p>
+                        <p>\(y(t) = {u \times sin(\theta) \over u \times cos(\theta)} \times x - {1 \over 2} g ({x \over u_{x}})^2 + h\)</p>
+                        <p>\(\downarrow\)</p>
+                        <p>\(y(t) = {sin(\theta) \over cos(\theta)} \times x - {1 \over 2} g ({x \over u_{x}})^2 + h\)</p>
+                        <p>\(\downarrow\)</p>
+                        <p>\(y(t) = tan(\theta) \times x - {1 \over 2} g ({x \over u_{x}})^2 + h\)</p>
+                        <p>\(\downarrow\)</p>
+                        <p>\(y(t) = tan(\theta) \times x - {g \over {2 ( u \times cos(\theta))^2}} \times x^2 + h\)</p>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <p>To calculate the time of flight \(T\), we must use our function \(y(t)\) to find where the \(y\) coordinate reaches \(0\).</p>
+                <p>\( y(T) = 0 \)</p>
+                <p>\( y(T) = h + u \times sin(\theta) \times T - {1 \over 2} \times g \times T^2 \)</p>
+                <p>\(\dot{.\hspace{.095in}.}\hspace{.5in}\)</p>
+                <p>\( h + u \times sin(\theta) \times T - {1 \over 2} \times g \times T^2 = 0 \)</p>
+                <p>\(\downarrow\)</p>
+                <p>\( {1 \over 2} \times g \times T^2 - u \times sin(\theta) \times T + h = 0 \)</p>
+                <p>We can then solve this quadratic, discarding the negative root.</p>
+            </li>
+            <li>
+                <p>Using the time of flight \(T\), we can calculate the horizontal range \(R\) and plot the points between 0 and \(R\) in intervals of \(\Delta x\).</p>
+                <p>\(R = u_{x} \times T\)</p>
+            </li>
+            <li>
+                <p>To find the apogee, we can take the function for vertical motion \( y(t) \) and find the maximum value of \(y\).</p>
+                <p>Maximum \( = -{b \over 2a} \) so \( t_{max} = {u_{y} \over g} \)</p>
+                <br>
+                <p>\( y(t) = u_{y} \times t - {1 \over 2} g t^2 + h \)</p>
+                <p>\(\downarrow\)</p>
+                <p>\( y(t_{max}) = u_{y} \times t_{max} - {1 \over 2} g t_{max}^2 + h \)</p>
+                <p>And calculate the \(x\) coordinate by figuring out the \(x\) position at point \(t_{max}\) given horizontal velocity \(u_{x}\).</p>
+                <p>\(x = u_{x} \times t_{max}\)</p>
+            </li>
+        </ol>
+    </div>
+    <footer>
+        <p>Built by <a href="https://kotla.eu/">Oliver Kotla</a></p>
+        <!-- <p>UI elements via <a href="https://ui.kotla.eu/">KotlaUI</a></p> -->
+        <p>Graph via <a href="https://plotly.com/">Plotly.js</a></p>
+        <p>TeX via <a href="https://katex.org/">KaTeX</a></p>
+    </footer>
+    <script src="scripts/tasks/2/plot.js"></script>
+</body>
+</html>

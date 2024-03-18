@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 1 - Oliver Kotla - BPhO Computational Challenge</title>
+
+    <script src="scripts/libs/plotly/plotly-2.30.0.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="styles/style.css">
+
+    <link rel="stylesheet" href="scripts/libs/katex/katex.min.css" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="scripts/libs/katex/katex.min.js" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="scripts/libs/katex/contrib/auto-render.min.js" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+</head>
+<body>
+    <div class="content">
+        <h1>Task 1</h1>
+        <div id="graph"></div>
+        <div class="input-container">
+            <span class="redrawcontainer">
+                <label class="switch">
+                    <span>
+                        <input type="checkbox" id="autoredraw">
+                        <span class="slider"></span>
+                    </span>
+                </label>
+                <label for="autoredraw" style="transform: translateY(-2px);">
+                    <span><svg xmlns="http://www.w3.org/2000/svg" style="height: 16px; width: 16px; transform: translateY(2px);" viewBox="0 0 24 24"><title>chart-bell-curve</title><path d="M9.96,11.31C10.82,8.1 11.5,6 13,6C14.5,6 15.18,8.1 16.04,11.31C17,14.92 18.1,19 22,19V17C19.8,17 19,14.54 17.97,10.8C17.08,7.46 16.15,4 13,4C9.85,4 8.92,7.46 8.03,10.8C7.03,14.54 6.2,17 4,17V2H2V22H22V20H4V19C7.9,19 9,14.92 9.96,11.31Z" /></svg></span>
+                    <span>Auto Redraw</span>
+                </label>
+            </span>
+            <br>
+            <label for="u">Launch Speed</label>
+            <span class="input-wrap">
+                <input step="0.1" min="0" value="10" type="number" name="Launch Speed" id="u" onchange="plotfrominputs();"><span>\(m/s\)</span>
+            </span>
+            <label for="theta">Launch Angle</label>
+            <span class="input-wrap">
+                <input step="0.1" min="0" max="360" value="45" type="number" name="Launch Angle" id="theta" onchange="plotfrominputs();"><span>\(\circ\)</span>
+            </span>
+            <label for="h">Launch Height</label>
+            <span class="input-wrap">
+                <input step="0.1" min="0" value="10" type="number" name="Launch Height" id="h" onchange="plotfrominputs();"><span>\(m\)</span>
+            </span>
+            <label for="g">Gravitational Strength</label>
+            <span class="input-wrap">
+                <input step="0.1" min="0" value="9.8" type="number" name="Gravity" id="g" onchange="plotfrominputs();"><span>\(m/s^2\)</span>
+            </span>
+            <label class="button">
+                <button onclick="plotfrominputs();">Redraw</button>
+            </label>
+        </div>
+        <h2>Explanation</h2>
+        <ol>
+            <li>
+                <p>Given a launch speed \(u\) and launch angle \(\theta\), calculate the \(x\) and \(y\) velocities.</p>
+                <p>\( u_{x}=u \times cos(\theta) \)</p>
+                <p>\( u_{y}=u \times sin(\theta) \)</p>
+            </li>
+            <li><p>Calculate \(x\) and \(y\) coordinates for each point along the graph, increasing by \(\Delta t\) (preset to 0.1).</p>
+                <ol>
+                    <li>
+                        <p>\( x = u_{x} \times t \)</p>
+                    </li>
+                    <li>
+                        <p>\( y = h + u_{y} \times t - {{g \times t^2} \over 2} \)</p>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <p>Plot the \(x\) and \(y\) coordinates onto the graph, extending the curve until \(y \le 0\).</p>
+            </li>
+        </ol>
+    </div>
+    <footer>
+        <p>Built by <a href="https://kotla.eu/">Oliver Kotla</a></p>
+        <!-- <p>UI elements via <a href="https://ui.kotla.eu/">KotlaUI</a></p> -->
+        <p>Graph via <a href="https://plotly.com/">Plotly.js</a></p>
+        <p>TeX via <a href="https://katex.org/">KaTeX</a></p>
+    </footer>
+    <script src="scripts/tasks/1/plot.js"></script>
+</body>
+</html>

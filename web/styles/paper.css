@@ -1,0 +1,267 @@
+@import url(fonts.css);
+
+/* #region RESETS */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* #endregion */
+
+
+
+/* #region HTML, BODY */
+body {
+    margin: 0;
+    background-color:hsla(30,92%,91%,1);
+    background-image: radial-gradient(at 85% 81%, hsla(31,48%,74%,1) 0px, transparent 50%),
+    radial-gradient(at 22% 31%, hsla(29,94%,89%,1) 0px, transparent 50%), url("data:image/svg+xml,%3Csvg viewBox='0 0 380 380' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='0.65' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-blend-mode: multiply;
+/* 
+    background-attachment: fixed; */
+}
+/* #endregion
+
+
+
+/* #region INPUT ELEMENTS */
+/* #region TOGGLE SWITCH */
+/* The switch - the box around the slider */
+.switch {
+    /* Variables */
+    --switch_width: 2em;
+    --switch_height: 1em;
+    --thumb_color: #fff;
+    --track_color: #fff;
+    --track_active_color: #aaa;
+    --outline_color: #000;
+    font-size: 17px;
+    position: relative;
+    display: inline-block;
+    width: var(--switch_width);
+    height: var(--switch_height);
+}
+
+/* Hide default HTML checkbox */
+.switch input[type="checkbox"] {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    box-sizing: border-box;
+    border: 2px solid var(--outline_color);
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--track_color);
+    transition: .15s;
+    border-radius: var(--switch_height);
+}
+
+.slider:before {
+    box-sizing: border-box;
+    position: absolute;
+    content: "";
+    height: var(--switch_height);
+    width: var(--switch_height);
+    border: 2px solid var(--outline_color);
+    border-radius: 100%;
+    left: -2px;
+    bottom: -2px;
+    background-color: var(--thumb_color);
+    transform: translateY(-0.2em);
+    box-shadow: 0 0.2em 0 var(--outline_color);
+    transition: .15s;
+}
+
+input[type="checkbox"]:checked + .slider {
+    background-color: var(--track_active_color);
+}
+
+input[type="checkbox"]:focus-visible + .slider {
+    box-shadow: 0 0 0 2px var(--track_active_color);
+}
+
+/* Raise thumb when hovered */
+input[type="checkbox"]:hover + .slider:before {
+    transform: translateY(-0.3em);
+    box-shadow: 0 0.3em 0 var(--outline_color);
+}
+
+input[type="checkbox"]:checked + .slider:before {
+    transform: translateX(calc(var(--switch_width) - var(--switch_height))) translateY(-0.2em);
+}
+
+/* Raise thumb when hovered & checked */
+input[type="checkbox"]:hover:checked + .slider:before {
+    transform: translateX(calc(var(--switch_width) - var(--switch_height))) translateY(-0.3em);
+    box-shadow: 0 0.3em 0 var(--outline_color);
+}
+/* #endregion */
+/* #region BUTTON */
+.button > button, .button > input {
+    background-color: #fff;
+    font-family: 'Source Serif Pro', serif;
+    font-weight: 500;
+    font-size: 1em;
+    line-height: 1.2em;
+    box-sizing: border-box;
+    border-radius: 64px;
+    width: fit-content;
+    height: 32px;
+    border: 2px solid #000;
+    box-shadow: 0 0.2em 0 #000;
+
+    transition: 0.25s;
+}
+
+.button > button:hover, .button > input:hover {
+    transform: translateY(-0.05em);
+    box-shadow: 0 0.25em 0 #000;
+    cursor: pointer;
+}
+
+.button > button:active, .button > input:active {
+    transform: translateY(0.1em);
+    box-shadow: 0 0.1em 0 #000;
+    background-color: #aaa;
+    cursor: pointer;
+}
+/* #endregion */
+/* #region CHECKBOX */
+.checkbox > input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.checkbox > input[type="checkbox"]+span::before {
+    content: '';
+    border-radius: 6px;
+    background-color: #fff;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #000;
+    display: inline-block;
+    box-shadow: 0 0.2em 0 #000;
+    margin-right: 6px;
+    transform: translateY(3px);
+
+    transition: 0.25s;
+}
+
+.checkbox > input[type="checkbox"]+span:hover::before {
+    box-shadow: 0 0.3em 0 #000;
+    transform: translateY(calc(-0.1em + 3px));
+}
+
+.checkbox > input[type="checkbox"]:checked+span::before {
+    box-shadow: 0 0.1em 0 #000;
+    transform: translateY(calc(0.1em + 3px));
+}
+
+.checkbox > input[type="checkbox"]:checked+span:before {
+    background-color: #aaa;
+    /* NOTE: Replace the url with a path to an SVG of a checkmark to get a checkmark icon */
+    background-image: url('data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2024%2024%22%3E%3Ctitle%3Echeck%3C/title%3E%3Cpath%20d=%22M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z%22/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.checkbox > input[type="checkbox"]+span {
+    font-family: 'Source Serif Pro', serif;
+    font-weight: 500;
+    font-size: 1em;
+}
+/* #endregion */
+/* #region TEXTBOX */
+input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="number"], input[type="search"], input[type="url"], input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="color"], input[type="file"], textarea {
+    font-family: 'Source Serif Pro', serif;
+    font-weight: 500;
+    font-size: 1em;
+    line-height: 1.2em;
+    box-sizing: border-box;
+    border-radius: 6px;
+    height: 32px;
+    border: 2px solid #000;
+    box-shadow: 0 0.2em 0 #000;
+    padding: 0 8px;
+
+    transition: 0.25s;
+}
+/* #endregion */
+/* #endregion */
+
+
+
+/* #region SECTIONS AND DIV ELEMENTS */
+
+/* #endregion */
+
+
+
+/* #region TEXT AND TITLE ELEMENTS */
+sub {
+	vertical-align: sub;
+    margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+sup {
+	vertical-align: super;
+    margin: 0;
+	padding: 0;
+	border: 0;
+}
+/* #endregion */
+
+
+
+/* #region REUSABLE ELEMENTS */
+/* #endregion */
